@@ -1,34 +1,57 @@
 # Idempotent SIP Billing Engine
 
-A lightweight, fault-tolerant backend system and React dashboard for processing Systematic Investment Plan (SIP) installments. 
+A lightweight, fault-tolerant backend system and React dashboard designed for processing Systematic Investment Plan (SIP) installments. This submission for Better Software focuses heavily on system correctness, interface safety, and robust operational guardrails to ensure reliable financial transactions.
 
-Built for the Better Software engineering assessment, this project prioritizes **Correctness, Interface Safety, and Change Resilience** over feature volume.
+## Architecture & Guardrails
 
-## 🏗️ Architecture & Guardrails
-To ensure safe money movement and prevent invalid states, this engine implements:
-* **Idempotency:** The `/api/process-sip` endpoint requires an `Idempotency-Key` header. Duplicate requests (e.g., network retries) are intercepted at the database level to prevent double-charging.
-* **ACID Transactions:** Financial deductions use pessimistic row-level locking (`with_for_update()`) and explicit transaction blocks to prevent race conditions during concurrent requests.
-* **Finite State Machine (FSM):** Transactions strictly follow a `PENDING` -> `COMPLETED` or `FAILED` lifecycle enforced via Enum columns.
-* **Interface Safety:** All payloads are strictly validated using Marshmallow schemas before reaching the business logic.
+* **Idempotency:** Prevents double charges and guarantees safe retries by enforcing strict idempotency keys via HTTP headers.
+* **ACID Transactions:** Utilizes pessimistic row locking (`with_for_update()`) to prevent race conditions during concurrent installment processing.
+* **Finite State Machine:** Enforces strict execution paths with discrete `PENDING`, `COMPLETED`, and `FAILED` statuses to maintain data integrity.
+* **Interface Safety:** Leverages Marshmallow for rigorous payload validation, sanitization, and type-checking at the API boundary layer.
 
-## 💻 Tech Stack
+## Tech Stack
+
 * **Backend:** Python 3.13, Flask, SQLAlchemy ORM, Marshmallow
-* **Database:** SQLite (File-based for MVP simplicity, structured for easy Postgres migration)
+* **Database:** SQLite
 * **Frontend:** React 19, Vite, Tailwind CSS v4
-* **Testing:** Pytest
+* **Testing:** Pytest (35 automated tests)
 
-## 🚀 How to Run Locally
+## How to Run Locally
 
-### 1. Start the Backend (Flask)
-Open a terminal in the root directory and run:
+### Backend Setup
+
+Create and activate a virtual environment:
 
 ```bash
-# Create and activate virtual environment
 python -m venv venv
-venv\Scripts\activate  # Use 'source venv/bin/activate' on Mac/Linux
+venv\Scripts\activate  # On macOS/Linux: source venv/bin/activate
+```
 
-# Install dependencies
+Install dependencies and start the application:
+
+```bash
 pip install -r requirements.txt
-
-# Run the Flask server (runs on port 5000)
 python run.py
+```
+
+### Frontend Setup
+
+Install Node dependencies and start the Vite development server:
+
+```bash
+npm install
+npm run dev
+```
+
+## Running the Test Suite
+
+Execute the comprehensive automated test suite:
+
+```bash
+pytest -v
+```
+
+## Required Assessment Files
+
+* **Walkthrough Video:** [Insert Video Link Here](#)
+* **AI Guidance:** Please review the included `ai_guidance.md` file for details regarding the AI tooling utilized during development.
