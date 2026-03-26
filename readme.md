@@ -53,5 +53,5 @@ pytest -v
 
 ## Required Assessment Files
 
-* **Walkthrough Video:** [link](#https://drive.google.com/drive/folders/1uYf86O0eUigbzAPrG0hO0OntTcwVOlhy?usp=sharing)
+* **Walkthrough Video:** [https://drive.google.com/drive/folders/1uYf86O0eUigbzAPrG0hO0OntTcwVOlhy?usp=sharing](#https://drive.google.com/drive/folders/1uYf86O0eUigbzAPrG0hO0OntTcwVOlhy?usp=sharing)
 * **AI Guidance:** Please review the included `ai_guidance.md` file for details regarding the AI tooling utilized during development.
